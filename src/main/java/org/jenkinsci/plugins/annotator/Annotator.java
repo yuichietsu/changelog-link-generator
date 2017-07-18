@@ -25,9 +25,16 @@ package org.jenkinsci.plugins.annotator;
 
 import hudson.Extension;
 import hudson.MarkupText;
+import hudson.MarkupText.SubText;
 import hudson.model.AbstractBuild;
 import hudson.scm.ChangeLogAnnotator;
 import hudson.scm.ChangeLogSet.Entry;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.regex.Matcher;
 
 import java.util.regex.Pattern;
 import org.jenkinsci.plugins.annotator.AnnotatorProperty.DescriptorImpl;
@@ -37,12 +44,21 @@ public class Annotator extends ChangeLogAnnotator {
 
     @Override
     public void annotate(AbstractBuild<?, ?> build, Entry change, MarkupText text) {
+        AnnotatorProperty prop = build.getProject().getProperty(AnnotatorProperty.class);
+        generateLinks(prop.patterns, text);
         DescriptorImpl descriptor = AnnotatorProperty.DescriptorImpl.get();
-        for (AnnotatorPattern re : descriptor.patterns) {
-            Pattern p = Pattern.compile(re.pattern, Pattern.CASE_INSENSITIVE);
-            for (MarkupText.SubText st : text.findTokens(p)) {
+        generateLinks(descriptor.patterns, text);
+    }
+
+    private void generateLinks(AnnotatorPattern[] patterns, MarkupText text) {
+        String contents = text.getText();
+        for (AnnotatorPattern re : patterns) {
+            Pattern p = Pattern.compile(re.pattern);
+            Matcher m = p.matcher(contents);
+            while (m.find()) {
+                SubText st = text.new SubText(m, 0);
                 String url = st.replace(re.replacement);
-                st.surroundWith("<a href='" + url + "'>", "</a>");
+                st.href(url);
             }
         }
     }

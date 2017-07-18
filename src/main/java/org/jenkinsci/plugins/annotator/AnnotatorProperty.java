@@ -73,7 +73,7 @@ public class AnnotatorProperty extends JobProperty<AbstractProject<?, ?>> {
 
         @Override
         public String getDisplayName() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            return "Pattern/URL";
         }
 
         public AnnotatorPattern[] getPatterns() {

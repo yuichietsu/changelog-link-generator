@@ -2,7 +2,7 @@
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
   <f:section title="Regular Expression ChangeLog Annotator">
       <f:entry title="Pattern/URL">
-            <f:repeatable var="pattern" items="${descriptor.patterns}">
+            <f:repeatable var="pattern" items="${instance.patterns}">
                 <table width="100%">
                     <f:entry title="Pattern">
                         <f:textbox name="pattern.pattern" value="${pattern.pattern}" />
