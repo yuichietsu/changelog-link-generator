@@ -47,7 +47,7 @@ public class Annotator extends ChangeLogAnnotator {
         AnnotatorProperty prop = build.getProject().getProperty(AnnotatorProperty.class);
         generateLinks(prop.patterns, text);
         DescriptorImpl descriptor = AnnotatorProperty.DescriptorImpl.get();
-        generateLinks(descriptor.patterns, text);
+        generateLinks(descriptor.getPatterns(), text);
     }
 
     private void generateLinks(AnnotatorPattern[] patterns, MarkupText text) {

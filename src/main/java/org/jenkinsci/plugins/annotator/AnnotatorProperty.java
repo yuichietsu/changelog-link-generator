@@ -46,7 +46,7 @@ public class AnnotatorProperty extends JobProperty<AbstractProject<?, ?>> {
     @Extension
     public static final class DescriptorImpl extends JobPropertyDescriptor {
 
-        public AnnotatorPattern[] patterns = new AnnotatorPattern[]{};
+        private AnnotatorPattern[] patterns = new AnnotatorPattern[]{};
 
         public DescriptorImpl() {
             super(AnnotatorProperty.class);
@@ -60,7 +60,8 @@ public class AnnotatorProperty extends JobProperty<AbstractProject<?, ?>> {
         }
 
         public static DescriptorImpl get() {
-            return Hudson.getInstance().getDescriptorByType(DescriptorImpl.class);
+            Hudson hudson = Hudson.getInstance();
+            return hudson == null ? null : hudson.getDescriptorByType(DescriptorImpl.class);
         }
 
         @Override
@@ -77,7 +78,7 @@ public class AnnotatorProperty extends JobProperty<AbstractProject<?, ?>> {
         }
 
         public AnnotatorPattern[] getPatterns() {
-            return patterns;
+            return this.patterns.clone();
         }
     }
 
