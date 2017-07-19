@@ -1,0 +1,24 @@
+<div>
+    <pre>
+    <b>Link to issue page of mantis</b>
+        
+    Pattern: (rid|RID):#(\d+)
+    URL: http://yourmantis.com/view.php?id=$2
+    RID:#1234 => &lt;a href='http://yourmantis.com/view.php?id=1234'&gt;RID:#1234&lt;/a&gt;
+
+    Pattern: http://yourmantis\.com/view\.php\?id=\d+
+    URL: $0
+    http://yourmantis.com/view.php?id=1234 => &lt;a href='http://yourmantis.com/view.php?id=1234'&gt;http://yourmantis.com/view.php?id=1234&lt;/a&gt;
+
+
+    <b>Link to issue page of redmine</b>
+        
+    Pattern: (refs|REFS)\s+(\d+)
+    URL: http://yourredmine.com/issues/$2
+    refs 1234 => &lt;a href='http://yourredmine.com/issues/1234'&gt;refs 1234&lt;/a&gt;
+
+    Pattern: http://yourredmine\.com/issues/\d+
+    URL: $0
+    http://yourredmine.com/issues/1234 => &lt;a href='http://yourredmine.com/issues/1234'&gt;http://yourredmine.com/issues/1234&lt;/a&gt;
+    </pre>
+</div>

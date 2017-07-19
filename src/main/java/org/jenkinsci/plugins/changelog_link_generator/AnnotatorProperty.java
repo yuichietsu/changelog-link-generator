@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.jenkinsci.plugins.annotator;
+package org.jenkinsci.plugins.changelog_link_generator;
 
 import hudson.Extension;
 import hudson.model.AbstractProject;

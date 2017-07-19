@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.jenkinsci.plugins.annotator;
+package org.jenkinsci.plugins.changelog_link_generator;
 
 import hudson.Extension;
 import hudson.MarkupText;
@@ -37,7 +37,7 @@ import java.util.TreeMap;
 import java.util.regex.Matcher;
 
 import java.util.regex.Pattern;
-import org.jenkinsci.plugins.annotator.AnnotatorProperty.DescriptorImpl;
+import org.jenkinsci.plugins.changelog_link_generator.AnnotatorProperty.DescriptorImpl;
 
 @Extension
 public class Annotator extends ChangeLogAnnotator {
@@ -45,20 +45,26 @@ public class Annotator extends ChangeLogAnnotator {
     @Override
     public void annotate(AbstractBuild<?, ?> build, Entry change, MarkupText text) {
         AnnotatorProperty prop = build.getProject().getProperty(AnnotatorProperty.class);
-        generateLinks(prop.patterns, text);
+        if (prop != null) {
+            generateLinks(prop.patterns, text);
+        }
         DescriptorImpl descriptor = AnnotatorProperty.DescriptorImpl.get();
-        generateLinks(descriptor.getPatterns(), text);
+        if (descriptor != null) {
+            generateLinks(descriptor.getPatterns(), text);
+        }
     }
 
     private void generateLinks(AnnotatorPattern[] patterns, MarkupText text) {
-        String contents = text.getText();
-        for (AnnotatorPattern re : patterns) {
-            Pattern p = Pattern.compile(re.pattern);
-            Matcher m = p.matcher(contents);
-            while (m.find()) {
-                SubText st = text.new SubText(m, 0);
-                String url = st.replace(re.replacement);
-                st.href(url);
+        if (patterns != null) {
+            String contents = text.getText();
+            for (AnnotatorPattern re : patterns) {
+                Pattern p = Pattern.compile(re.pattern);
+                Matcher m = p.matcher(contents);
+                while (m.find()) {
+                    SubText st = text.new SubText(m, 0);
+                    String url = st.replace(re.replacement);
+                    st.href(url);
+                }
             }
         }
     }
