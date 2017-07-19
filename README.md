@@ -1,1 +1,3 @@
-# changelog-link-generator
+# Description
+
+This Jenkins plugin generates links in change log.
